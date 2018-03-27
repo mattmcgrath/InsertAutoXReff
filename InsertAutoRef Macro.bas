@@ -27,6 +27,7 @@ sel.MoveEndWhile cset:=(Chr$(32) & Chr$(13)), Count:=-sel.Characters.Count
 
 vHeadings = doc.GetCrossReferenceItems(wdRefTypeNumberedItem)
 
+CurrentArticle = ""
 CurrentSection = ""
 CurrentSubSection = ""
 CurrentSubSubSection = ""
@@ -34,9 +35,19 @@ i = 1
 
 For Each v In vHeadings
     v = Trim(v)
-    NewSection = FirstMatch("^\d+.\d+", (v))
+    NewArticle = FirstMatch("^\d+", (v))
+    NewSection = FirstMatch(".\d+", (v))
     NewSubSection = FirstMatch("^\([a-z]\)", (v))
     NewSubSubSection = FirstMatch("^\([iv]+\)", (v))
+     
+    If NewArticle <> "" Then
+        CurrentArticle = NewArticle
+        CurrentSection = ""
+        CurrentSubSection = ""
+        CurrentSubSubSection = ""
+        NewSubSection = ""
+        NewSubSubSection = ""
+    End If
      
     If NewSection <> "" Then
         CurrentSection = NewSection
@@ -77,7 +88,7 @@ For Each v In vHeadings
         CurrentSubSubSection = NewSubSubSection
     End If
      
-    CurrentHeading = CurrentSection & CurrentSubSection & CurrentSubSubSection
+    CurrentHeading = CurrentArticle & CurrentSection & CurrentSubSection & CurrentSubSubSection
     
     'MsgBox CurrentHeading
      
