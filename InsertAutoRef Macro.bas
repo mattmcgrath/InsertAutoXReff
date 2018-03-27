@@ -35,8 +35,8 @@ i = 1
 
 For Each v In vHeadings
     v = Trim(v)
-    NewArticle = FirstMatch("^\d+", (v))
-    NewSection = FirstMatch(".\d+", (v))
+    NewArticle = FirstMatch("^\d+\b", (v))
+    NewSection = FirstMatch("\.\d+\b", (v))
     NewSubSection = FirstMatch("^\([a-z]\)", (v))
     NewSubSubSection = FirstMatch("^\([iv]+\)", (v))
      
